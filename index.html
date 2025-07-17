@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+0<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -148,20 +148,20 @@
       result.textContent = '送信中...';
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbwMDG5RGfQRooXLtEy1qWQLuN36lWH6NEIQ5JLuTLCd-fnvUVoFnT2iZMLOo1rFSiEvjw/exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbx30FzNU96m-1Y3ivcx5lRTBCpWzN2TinejNF6FVATHzkrfftbIuwb4mWVFjcrUsJB1/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(data)
         });
 
-        const text = await res.text();
-        result.textContent = '予約完了！';
-        form.reset();
-        userButtons.forEach(b => b.classList.remove('selected'));
-        userIdInput.value = '';
-        document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+        if (!res.ok) throw new Error("サーバーエラー");
+
+        const json = await res.json();
+        result.textContent = json.message || '予約完了！';
+        // フォーム初期化処理...
+
       } catch (err) {
-        result.textContent = 'エラー: ' + err;
+        result.textContent = 'エラー: ' + err.message;
       }
     });
   </script>
