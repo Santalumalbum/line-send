@@ -100,7 +100,7 @@
 
         <label>送信先</label>
         <div class="user-buttons">
-          <button type="button" class="user-button" data-user="U97abf2c91135d62ae71f1334db654">自分</button>
+          <button type="button" class="user-button" data-user="U97abf2c92bea91135d62ae71f1334db9">自分</button>
           <button type="button" class="user-button" data-user="U97abf2c93413546574647434db654">恵子</button>
         </div>
         <input type="hidden" name="userId" id="userId">
@@ -148,7 +148,7 @@
       result.textContent = '送信中...';
 
       try {
-        const res = await fetch('【GASのWebアプリURL】', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbx2OXtNj2aTyqc0ya6EhDUzjKm_Yb2gwnVIXQad8bZWj5xN7nWaHShoSir2UZ0FnEWnIQ/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
