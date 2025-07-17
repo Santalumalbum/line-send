@@ -133,40 +133,46 @@
     document.getElementById('lineForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
+      const userButtons = document.querySelectorAll('.user-button');
+      const userIdInput = document.getElementById('userId');
+
       if (!userIdInput.value) {
         alert("送信先を選択してください");
         return;
       }
 
       const form = e.target;
-      const data = {
-        message: form.message.value,
-        datetime: form.datetime.value.replace('T', ' '),
-        userId: form.userId.value
-      };
+      const formData = new URLSearchParams();
+      formData.append('message', form.message.value);
+      formData.append('datetime', form.datetime.value.replace('T', ' '));
+      formData.append('userId', form.userId.value);
 
       const result = document.getElementById('result');
       result.textContent = '送信中...';
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbwol0Aay8Hlg_qGtt4tcxy5D5k9bGzu7GF_OXo5E08uTWpDIPnqtkHjsUevR94e61VevQ/exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbz0GGmuM5F-Za6HtQrgE-GUh-4giY5MPDstzeMFMDvuAtQse3UYyDu0aIUTMY38rNTjAA/exec', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: formData
         });
 
         const text = await res.text();
         result.textContent = '予約完了！';
 
-        // ★ フォーム内容をリセット
+        // ✅ フォーム内容をリセット
         form.reset();
+
+        // ✅ ユーザー選択を解除
         userButtons.forEach(b => b.classList.remove('selected'));
         userIdInput.value = '';
 
-        // ★ 送信日時を現在時刻に再設定
+        // ✅ 日時を現在に再設定
         const dt = new Date();
         dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
-        document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+        document.getElementById("datetime").value = dt.toISOString().slice(0, 16);
 
       } catch (err) {
         console.warn('送信後のfetchエラー（おそらく成功）:', err);
