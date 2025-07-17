@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE送信予約</title>
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#007aff">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f2f2f7;
+      color: #333;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2em 1em;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2em;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h1 {
+      font-size: 1.5em;
+      text-align: center;
+      color: #007aff;
+      margin-bottom: 1.5em;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    textarea, input[type="datetime-local"] {
+      width: 100%;
+      font-size: 1em;
+      padding: 0.8em;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .user-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      margin-top: 0.5em;
+    }
+    .user-button {
+      flex: 1;
+      font-size: 1em;
+      padding: 0.9em;
+      border: none;
+      border-radius: 12px;
+      background-color: #ccc;
+      color: white;
+      transition: background-color 0.2s ease;
+    }
+    .user-button.selected {
+      background-color: #007aff;
+    }
+    button[type="submit"] {
+      margin-top: 2em;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 1em;
+      font-size: 1.1em;
+      width: 100%;
+      transition: background-color 0.2s ease;
+    }
+    button[type="submit"]:active {
+      background-color: #005fcc;
+    }
+    #result {
+      text-align: center;
+      margin-top: 1em;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>LINE送信予約</h1>
+      <form id="lineForm">
+        <label for="message">メッセージ</label>
+        <textarea id="message" name="message" rows="3" required placeholder="LINEに送るメッセージを入力"></textarea>
+
+        <label for="datetime">送信日時</label>
+        <input type="datetime-local" id="datetime" name="datetime" required>
+
+        <label>送信先</label>
+        <div class="user-buttons">
+          <button type="button" class="user-button" data-user="U97abf2c91135d62ae71f1334db654">自分</button>
+          <button type="button" class="user-button" data-user="U97abf2c93413546574647434db654">恵子</button>
+        </div>
+        <input type="hidden" name="userId" id="userId">
+
+        <button type="submit">予約を送信</button>
+        <div id="result"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // デフォルトで現在時刻を設定（ローカル対応）
+    const dt = new Date();
+    dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+    document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+
+    // 送信先選択
+    const userButtons = document.querySelectorAll('.user-button');
+    const userIdInput = document.getElementById('userId');
+
+    userButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        userButtons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        userIdInput.value = btn.dataset.user;
+      });
+    });
+
+    // フォーム送信処理
+    document.getElementById('lineForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!userIdInput.value) {
+        alert("送信先を選択してください");
+        return;
+      }
+
+      const form = e.target;
+      const data = {
+        message: form.message.value,
+        datetime: form.datetime.value.replace('T', ' '),
+        userId: form.userId.value
+      };
+
+      const result = document.getElementById('result');
+      result.textContent = '送信中...';
+
+      try {
+        const res = await fetch('【GASのWebアプリURL】', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const text = await res.text();
+        result.textContent = '予約完了！';
+        form.reset();
+        userButtons.forEach(b => b.classList.remove('selected'));
+        userIdInput.value = '';
+        document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+      } catch (err) {
+        result.textContent = 'エラー: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>
