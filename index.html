@@ -148,11 +148,12 @@
       result.textContent = '送信中...';
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbxMIAKhGlZZKAO1W4vGctZPDv1N_VZ4RbU923bHnhO2oJItoX_CKOdDcYujKKjBVIT1jw/exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbwMDG5RGfQRooXLtEy1qWQLuN36lWH6NEIQ5JLuTLCd-fnvUVoFnT2iZMLOo1rFSiEvjw/exec', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(data)
         });
+
         const text = await res.text();
         result.textContent = '予約完了！';
         form.reset();
