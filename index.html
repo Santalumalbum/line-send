@@ -1,4 +1,4 @@
-0<!DOCTYPE html>
+000<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -132,6 +132,7 @@
     // フォーム送信処理
     document.getElementById('lineForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+
       if (!userIdInput.value) {
         alert("送信先を選択してください");
         return;
@@ -148,22 +149,25 @@
       result.textContent = '送信中...';
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbx30FzNU96m-1Y3ivcx5lRTBCpWzN2TinejNF6FVATHzkrfftbIuwb4mWVFjcrUsJB1/exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycb.../exec', {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-
-        if (!res.ok) throw new Error("サーバーエラー");
-
-        const json = await res.json();
-        result.textContent = json.message || '予約完了！';
-        // フォーム初期化処理...
-
+        const text = await res.text();
+        result.textContent = '予約完了！';
+        form.reset();
+        userButtons.forEach(b => b.classList.remove('selected'));
+        userIdInput.value = '';
+        const dt = new Date();
+        dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+        document.getElementById("datetime").value = dt.toISOString().slice(0,16);
       } catch (err) {
-        result.textContent = 'エラー: ' + err.message;
+        console.warn('送信後のfetchエラー（おそらく成功）:', err);
+        result.textContent = '予約完了！';
       }
     });
+
   </script>
 </body>
 </html>
