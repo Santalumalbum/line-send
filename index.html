@@ -149,25 +149,30 @@
       result.textContent = '送信中...';
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycb.../exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbxXpopSjGq_nTIZ_m6C6m2ZVWaLSPyH4ZPsjYfwyEjIYcjYQt1L0sWGzpnN9JFD1iOitQ/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
+
         const text = await res.text();
         result.textContent = '予約完了！';
+
+        // ★ フォーム内容をリセット
         form.reset();
         userButtons.forEach(b => b.classList.remove('selected'));
         userIdInput.value = '';
+
+        // ★ 送信日時を現在時刻に再設定
         const dt = new Date();
         dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
         document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+
       } catch (err) {
         console.warn('送信後のfetchエラー（おそらく成功）:', err);
-        result.textContent = '予約完了！';
+        result.textContent = '予約完了！（応答確認できませんでした）';
       }
     });
-
   </script>
 </body>
 </html>
