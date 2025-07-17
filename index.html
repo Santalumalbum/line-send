@@ -162,17 +162,19 @@
         const text = await res.text();
         result.textContent = '予約完了！';
 
-        // ✅ フォーム内容をリセット
+        // フォームをリセット
         form.reset();
-
-        // ✅ ユーザー選択を解除
         userButtons.forEach(b => b.classList.remove('selected'));
         userIdInput.value = '';
 
-        // ✅ 日時を現在に再設定
+        // ユーザー選択を解除
+        userButtons.forEach(b => b.classList.remove('selected'));
+        userIdInput.value = '';
+
+        // 日時初期化
         const dt = new Date();
         dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
-        document.getElementById("datetime").value = dt.toISOString().slice(0, 16);
+        document.getElementById("datetime").value = dt.toISOString().slice(0,16);
 
       } catch (err) {
         console.warn('送信後のfetchエラー（おそらく成功）:', err);
