@@ -7,89 +7,101 @@
   <link rel="apple-touch-icon" href="icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#007aff">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #f2f2f7;
-      color: #333;
-    }
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 2em 1em;
-    }
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 2em;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    h1 {
-      font-size: 1.5em;
-      text-align: center;
-      color: #007aff;
-      margin-bottom: 1.5em;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1.5em;
-      margin-bottom: 0.5em;
-    }
-    textarea, input[type="datetime-local"] {
-      width: 100%;
-      font-size: 1em;
-      padding: 0.8em;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    .user-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 1em;
-      margin-top: 0.5em;
-    }
-    .user-button {
-      flex: 1;
-      font-size: 1em;
-      padding: 0.9em;
-      border: none;
-      border-radius: 12px;
-      background-color: #ccc;
-      color: white;
-      transition: background-color 0.2s ease;
-    }
-    .user-button.selected {
-      background-color: #007aff;
-    }
-    button[type="submit"] {
-      margin-top: 2em;
-      background-color: #007aff;
-      color: white;
-      border: none;
-      border-radius: 14px;
-      padding: 1em;
-      font-size: 1.1em;
-      width: 100%;
-      transition: background-color 0.2s ease;
-    }
-    button[type="submit"]:active {
-      background-color: #005fcc;
-    }
-    #result {
-      text-align: center;
-      margin-top: 1em;
-      font-weight: bold;
-      color: green;
-    }
-    input[type="datetime-local"] {
-      appearance: none;
-      -webkit-appearance: none;
-    }
-  </style>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f2f2f7;
+    color: #333;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2em 1em;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2em;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  h1 {
+    font-size: 1.5em;
+    text-align: center;
+    color: #007aff;
+    margin-bottom: 1.5em;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  textarea,
+  input[type="datetime-local"] {
+    width: 100%;
+    font-size: 1em;
+    padding: 0.8em;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    display: block;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #fff;
+  }
+
+  .user-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    margin-top: 0.5em;
+  }
+
+  .user-button {
+    flex: 1;
+    font-size: 1em;
+    padding: 0.9em;
+    border: none;
+    border-radius: 12px;
+    background-color: #ccc;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+
+  .user-button.selected {
+    background-color: #007aff;
+  }
+
+  button[type="submit"] {
+    margin-top: 2em;
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 1em;
+    font-size: 1.1em;
+    width: 100%;
+    transition: background-color 0.2s ease;
+  }
+
+  button[type="submit"]:active {
+    background-color: #005fcc;
+  }
+
+  #result {
+    text-align: center;
+    margin-top: 1em;
+    font-weight: bold;
+    color: green;
+  }
+</style>
 </head>
 <body>
   <div class="container">
