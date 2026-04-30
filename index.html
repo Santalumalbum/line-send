@@ -2,111 +2,136 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>LINE送信予約</title>
+
   <link rel="apple-touch-icon" href="icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#007aff">
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #f2f2f7;
-    color: #333;
-  }
 
-  .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 2em 1em;
-  }
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f2f2f7;
+      color: #333;
+    }
 
-  .card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 2em;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2em 1em;
+    }
 
-  h1 {
-    font-size: 1.5em;
-    text-align: center;
-    color: #007aff;
-    margin-bottom: 1.5em;
-  }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2em;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
 
-  label {
-    font-weight: bold;
-    display: block;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-  }
+    h1 {
+      font-size: 1.5em;
+      text-align: center;
+      color: #007aff;
+      margin-bottom: 1.5em;
+    }
 
-  textarea,
-  input[type="datetime-local"] {
-    width: 100%;
-    font-size: 1em;
-    padding: 0.8em;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    display: block;
-    appearance: none;
-    -webkit-appearance: none;
-    background-color: #fff;
-  }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
 
-  .user-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 1em;
-    margin-top: 0.5em;
-  }
+    textarea,
+    input[type="datetime-local"],
+    input[type="password"] {
+      width: 100%;
+      font-size: 1em;
+      padding: 0.8em;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      display: block;
+      appearance: none;
+      -webkit-appearance: none;
+      background-color: #fff;
+    }
 
-  .user-button {
-    flex: 1;
-    font-size: 1em;
-    padding: 0.9em;
-    border: none;
-    border-radius: 12px;
-    background-color: #ccc;
-    color: white;
-    transition: background-color 0.2s ease;
-  }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
 
-  .user-button.selected {
-    background-color: #007aff;
-  }
+    .user-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      margin-top: 0.5em;
+    }
 
-  button[type="submit"] {
-    margin-top: 2em;
-    background-color: #007aff;
-    color: white;
-    border: none;
-    border-radius: 14px;
-    padding: 1em;
-    font-size: 1.1em;
-    width: 100%;
-    transition: background-color 0.2s ease;
-  }
+    .user-button {
+      flex: 1;
+      font-size: 1em;
+      padding: 0.9em;
+      border: none;
+      border-radius: 12px;
+      background-color: #ccc;
+      color: white;
+      transition: background-color 0.2s ease, transform 0.05s ease;
+    }
 
-  button[type="submit"]:active {
-    background-color: #005fcc;
-  }
+    .user-button:active {
+      transform: scale(0.98);
+    }
 
-  #result {
-    text-align: center;
-    margin-top: 1em;
-    font-weight: bold;
-    color: green;
-  }
-</style>
+    .user-button.selected {
+      background-color: #007aff;
+    }
+
+    button[type="submit"] {
+      margin-top: 2em;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 1em;
+      font-size: 1.1em;
+      width: 100%;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    button[type="submit"]:active {
+      background-color: #005fcc;
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.55;
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 1em;
+      font-weight: bold;
+      min-height: 1.5em;
+    }
+
+    .hint {
+      font-size: 0.85em;
+      color: #666;
+      margin-top: 0.4em;
+      line-height: 1.5;
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
     <div class="card">
       <h1>LINE送信予約</h1>
+
       <form id="lineForm">
         <label for="message">メッセージ</label>
         <textarea id="message" name="message" rows="3" required placeholder="LINEに送るメッセージを入力"></textarea>
@@ -116,85 +141,128 @@
 
         <label>送信先</label>
         <div class="user-buttons">
-          <button type="button" class="user-button" data-user="U97abf2c92bea91135d62ae71f1334db9">自分</button>
-          <button type="button" class="user-button" data-user="U838a588f90d9740ac2103a6a70b04689">恵子</button>
+          <!-- GitHub上にはLINE userIdを絶対に置かない -->
+          <button type="button" class="user-button" data-target-key="me">送信先1</button>
+          <button type="button" class="user-button" data-target-key="family1">送信先2</button>
         </div>
-        <input type="hidden" name="userId" id="userId">
+        <input type="hidden" name="targetKey" id="targetKey">
 
-        <button type="submit">予約を送信</button>
+        <label for="pin">暗証番号</label>
+        <input type="password" id="pin" name="pin" inputmode="numeric" autocomplete="off" required placeholder="暗証番号">
+        <div class="hint">
+          ※暗証番号はGitHubには保存しません。GAS側のスクリプトプロパティで照合します。
+        </div>
+
+        <button type="submit" id="submitButton">予約を送信</button>
         <div id="result"></div>
       </form>
     </div>
   </div>
 
   <script>
-    // デフォルトで現在時刻を設定（ローカル対応）
-    const dt = new Date();
-    dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
-    document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+    // ★ここだけ自分のGASデプロイURLに差し替え
+    const GAS_ENDPOINT = 'https://script.google.com/macros/s/ここに新しいGASデプロイURL/exec';
 
-    // 送信先選択
+    const form = document.getElementById('lineForm');
     const userButtons = document.querySelectorAll('.user-button');
-    const userIdInput = document.getElementById('userId');
+    const targetKeyInput = document.getElementById('targetKey');
+    const submitButton = document.getElementById('submitButton');
+    const result = document.getElementById('result');
+
+    function setDefaultDatetime() {
+      const dt = new Date();
+      dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+      document.getElementById("datetime").value = dt.toISOString().slice(0, 16);
+    }
+
+    function showResult(message, isError = false) {
+      result.textContent = message;
+      result.style.color = isError ? '#d93025' : 'green';
+    }
+
+    setDefaultDatetime();
 
     userButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         userButtons.forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        userIdInput.value = btn.dataset.user;
+        targetKeyInput.value = btn.dataset.targetKey;
       });
     });
 
-    // フォーム送信処理
-    document.getElementById('lineForm').addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      const userButtons = document.querySelectorAll('.user-button');
-      const userIdInput = document.getElementById('userId');
+      const message = form.message.value.trim();
+      const datetime = form.datetime.value;
+      const targetKey = form.targetKey.value;
+      const pin = form.pin.value.trim();
 
-      if (!userIdInput.value) {
-        alert("送信先を選択してください");
+      if (!message) {
+        alert('メッセージを入力してください');
         return;
       }
 
-      const form = e.target;
-      const formData = new URLSearchParams();
-      formData.append('message', form.message.value);
-      formData.append('datetime', form.datetime.value.replace('T', ' '));
-      formData.append('userId', form.userId.value);
+      if (!datetime) {
+        alert('送信日時を選択してください');
+        return;
+      }
 
-      const result = document.getElementById('result');
-      result.textContent = '送信中...';
+      if (!targetKey) {
+        alert('送信先を選択してください');
+        return;
+      }
+
+      if (!pin) {
+        alert('暗証番号を入力してください');
+        return;
+      }
+
+      const formData = new URLSearchParams();
+      formData.append('message', message);
+      formData.append('datetime', datetime.replace('T', ' '));
+      formData.append('targetKey', targetKey);
+      formData.append('pin', pin);
+
+      submitButton.disabled = true;
+      showResult('送信中...');
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbz0GGmuM5F-Za6HtQrgE-GUh-4giY5MPDstzeMFMDvuAtQse3UYyDu0aIUTMY38rNTjAA/exec', {
+        const res = await fetch(GAS_ENDPOINT, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
           body: formData
         });
 
         const text = await res.text();
-        result.textContent = '予約完了！';
 
-        // フォームをリセット
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (jsonError) {
+          throw new Error('GASからJSON以外の応答が返りました。デプロイ設定や権限を確認してください。');
+        }
+
+        if (!data.ok) {
+          throw new Error(data.message || '予約に失敗しました');
+        }
+
+        showResult('予約完了しました');
+
+        const keepPin = form.pin.value;
+
         form.reset();
         userButtons.forEach(b => b.classList.remove('selected'));
-        userIdInput.value = '';
+        targetKeyInput.value = '';
+        setDefaultDatetime();
 
-        // ユーザー選択を解除
-        userButtons.forEach(b => b.classList.remove('selected'));
-        userIdInput.value = '';
-
-        // 日時初期化
-        const dt = new Date();
-        dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
-        document.getElementById("datetime").value = dt.toISOString().slice(0,16);
+        // 毎回暗証番号を入れるのが面倒なら、下の1行を有効化
+        // form.pin.value = keepPin;
 
       } catch (err) {
-        console.error('送信エラー:', err);
-        result.textContent = '送信に失敗しました。もう一度確認してください。';
+        console.error(err);
+        showResult('送信に失敗しました：' + err.message, true);
+      } finally {
+        submitButton.disabled = false;
       }
     });
   </script>
