@@ -193,8 +193,8 @@
         document.getElementById("datetime").value = dt.toISOString().slice(0,16);
 
       } catch (err) {
-        console.warn('送信後のfetchエラー（おそらく成功）:', err);
-        result.textContent = '予約完了！';
+        console.error('送信エラー:', err);
+        result.textContent = '送信に失敗しました。もう一度確認してください。';
       }
     });
   </script>
