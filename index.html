@@ -6,6 +6,7 @@
   <title>LINE送信予約</title>
 
   <link rel="apple-touch-icon" href="icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#007aff">
 
@@ -160,8 +161,8 @@
   </div>
 
   <script>
-    // ★ここだけ自分のGASデプロイURLに差し替え
-    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxWqRLG5HcT5KLHhUiM34JDrwAn9gdaT_IqsrmLfcnjN5WSYxzyH51FjXYAncCOIrpRjw/exec';
+    // ★予約受付専用デプロイURL（実行方式=自分 / アクセス=全員）
+    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzDYVPabJtKERD5aH6h-c6rCJv0kMBs342bXHov0r-fhJ3wONXGEGydogupmD9z_WXg8g/exec';
 
     const form = document.getElementById('lineForm');
     const userButtons = document.querySelectorAll('.user-button');
